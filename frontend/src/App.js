@@ -1,8 +1,4 @@
-import React from "react";
-import Home from "./components/Home";
-
-function App() {
-  return <Home />;
+import Join from "./components/Join";
+export default function App() {
+  return <Join />;
 }
-
-export default App;

@@ -1,38 +1,53 @@
-.App {
+body {
+  margin: 0;
+  font-family: Arial;
+}
+
+.join {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(120deg, #667eea, #764ba2);
+}
+
+.card {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.card input {
+  padding: 10px;
+  width: 100%;
+  margin: 10px 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.card button {
+  padding: 10px 20px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.editorPage {
+  padding: 20px;
+}
+
+.body {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  gap: 10px;
 }
 
-.App-link {
-  color: #61dafb;
+textarea {
+  width: 80%;
+  height: 400px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.users {
+  width: 20%;
+  background: #f4f4f4;
+  padding: 10px;
+}
+
+.typing {
+  color: green;
 }
