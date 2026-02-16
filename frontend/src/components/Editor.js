@@ -1,56 +1,46 @@
 import { useEffect, useState } from "react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import { socket } from "../socket";
-import Users from "./Users";
 
 export default function Editor({ roomId, username }) {
-  const [text, setText] = useState("");
+  const [value, setValue] = useState("");
   const [users, setUsers] = useState([]);
-  const [typing, setTyping] = useState("");
 
   useEffect(() => {
     socket.emit("join-document", { roomId, username });
 
-    socket.on("load-document", (content) => setText(content));
-    socket.on("receive-changes", (c) => setText(c));
-    socket.on("users", (u) => setUsers(u));
-    socket.on("typing", (name) => {
-      setTyping(name);
-      setTimeout(() => setTyping(""), 1000);
-    });
+    socket.on("load-document", setValue);
+    socket.on("receive-changes", setValue);
+    socket.on("presence", setUsers);
   }, []);
 
-  const handleChange = (e) => {
-    const value = e.target.value;
-    setText(value);
-
-    socket.emit("send-changes", { roomId, content: value });
-    socket.emit("typing", { roomId, username });
+  const handleChange = (content) => {
+    setValue(content);
+    socket.emit("send-changes", { roomId, content });
   };
 
-  // autosave every 2 sec
-  useEffect(() => {
-    const interval = setInterval(() => {
-      socket.emit("save-document", { roomId, content: text });
-    }, 2000);
-
-    return () => clearInterval(interval);
-  }, [text]);
-
   return (
-    <div className="editorPage">
-      <div className="top">
-        <h3>Room: {roomId}</h3>
-        <button onClick={() => navigator.clipboard.writeText(roomId)}>
-          Copy Room ID
-        </button>
+    <div className="editorLayout">
+      {/* HEADER */}
+      <div className="header">
+        <div>
+          <h3>Room: {roomId}</h3>
+        </div>
+
+        <div className="users">
+          {users.map((u) => (
+            <span key={u.id} className="avatar">
+              {u.username[0]}
+            </span>
+          ))}
+        </div>
       </div>
 
-      <div className="body">
-        <textarea value={text} onChange={handleChange} />
-        <Users users={users} />
+      {/* EDITOR */}
+      <div className="editorContainer">
+        <ReactQuill value={value} onChange={handleChange} theme="snow" />
       </div>
-
-      {typing && <p className="typing">{typing} is typing...</p>}
     </div>
   );
 }

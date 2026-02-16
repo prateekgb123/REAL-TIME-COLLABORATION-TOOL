@@ -1,53 +1,80 @@
 body {
   margin: 0;
-  font-family: Arial;
+  font-family: Inter, sans-serif;
 }
 
-.join {
+/* JOIN PAGE */
+.joinPage {
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(120deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
 }
 
-.card {
+.joinCard {
   background: white;
-  padding: 30px;
-  border-radius: 10px;
+  padding: 40px;
+  border-radius: 12px;
+  width: 320px;
   text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
-.card input {
-  padding: 10px;
+.joinCard input {
   width: 100%;
-  margin: 10px 0;
+  padding: 10px;
+  margin-top: 10px;
 }
 
-.card button {
-  padding: 10px 20px;
-}
-
-.editorPage {
-  padding: 20px;
-}
-
-.body {
+.btns {
+  margin-top: 15px;
   display: flex;
   gap: 10px;
 }
 
-textarea {
-  width: 80%;
-  height: 400px;
-}
-
-.users {
-  width: 20%;
-  background: #f4f4f4;
+.btns button {
+  flex: 1;
   padding: 10px;
+  border: none;
+  cursor: pointer;
 }
 
-.typing {
-  color: green;
+.create {
+  background: black;
+  color: white;
+}
+
+/* EDITOR */
+.editorLayout {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  height: 60px;
+  padding: 0 20px;
+  background: white;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.editorContainer {
+  flex: 1;
+  padding: 20px;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #4f46e5;
+  color: white;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 6px;
 }

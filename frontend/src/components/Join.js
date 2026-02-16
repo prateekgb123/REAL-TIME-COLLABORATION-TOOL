@@ -4,26 +4,44 @@ import Editor from "./Editor";
 import "../App.css";
 
 export default function Join() {
-  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
   const [room, setRoom] = useState("");
-  const [join, setJoin] = useState(false);
+  const [joined, setJoined] = useState(false);
 
   const handleCreate = () => {
-    setRoom(uuid());
-    setJoin(true);
+    const id = uuid();
+    setRoom(id);
+    setJoined(true);
   };
 
-  if (join) return <Editor username={name} roomId={room} />;
+  const handleJoin = () => {
+    if (!room || !username) return alert("Enter details");
+    setJoined(true);
+  };
+
+  if (joined) return <Editor username={username} roomId={room} />;
 
   return (
-    <div className="join">
-      <div className="card">
-        <h2>Realtime Collaboration</h2>
+    <div className="joinPage">
+      <div className="joinCard">
+        <h1>🚀 Collaboration Space</h1>
+
         <input
-          placeholder="Enter username"
-          onChange={(e) => setName(e.target.value)}
+          placeholder="Your name"
+          onChange={(e) => setUsername(e.target.value)}
         />
-        <button onClick={handleCreate}>Create Room</button>
+
+        <input
+          placeholder="Enter Room ID"
+          onChange={(e) => setRoom(e.target.value)}
+        />
+
+        <div className="btns">
+          <button onClick={handleJoin}>Join Room</button>
+          <button className="create" onClick={handleCreate}>
+            Create New
+          </button>
+        </div>
       </div>
     </div>
   );
