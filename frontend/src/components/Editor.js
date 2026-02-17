@@ -42,39 +42,31 @@ export default function Editor({ roomId, username }) {
 
   if (!loaded) return <p style={{ padding: 20 }}>Loading document...</p>;
 
-  return (
-    <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
-      
-      {/* HEADER */}
-      <div
-        style={{
-          height: "60px",
-          background: "#111",
-          color: "white",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "0 20px"
-        }}
-      >
-        <div>
-          <strong>Room:</strong> {roomId}
-        </div>
+return (
+  <div className="editorWrapper">
 
-        <div>
-          <strong>User:</strong> {username}
-        </div>
+    {/* HEADER */}
+    <div className="editorHeader">
+      <div>
+        <strong>Room ID:</strong> {roomId}
       </div>
+      <div>
+        <strong>User:</strong> {username}
+      </div>
+    </div>
 
-      {/* EDITOR */}
-      <div style={{ flex: 1 }}>
+    {/* EDITOR AREA */}
+    <div className="editorBody">
+      <div className="editorContainer">
         <ReactQuill
           value={value}
           onChange={handleChange}
           theme="snow"
-          style={{ height: "100%" }}
         />
       </div>
     </div>
-  );
+
+  </div>
+);
+
 }

@@ -23,26 +23,40 @@ export default function Join() {
 
   return (
     <div className="joinPage">
-      <div className="joinCard">
-        <h1>🚀 Collaboration Space</h1>
+    <div className="joinCard">
+  <h1>🚀 Collaboration Space</h1>
 
-        <input
-          placeholder="Your name"
-          onChange={(e) => setUsername(e.target.value)}
-        />
+  <div className="inputGroup">
+    <input
+      type="text"
+      placeholder=" "
+      value={username}
+      onChange={(e) => setUsername(e.target.value)}
+    />
+    <label>Your Name</label>
+  </div>
 
-        <input
-          placeholder="Enter Room ID"
-          onChange={(e) => setRoom(e.target.value)}
-        />
+  <div className="inputGroup">
+    <input
+      type="text"
+      placeholder=" "
+      value={room}
+      onChange={(e) => setRoom(e.target.value)}
+    />
+    <label>Room ID</label>
+  </div>
 
-        <div className="btns">
-          <button onClick={handleJoin}>Join Room</button>
-          <button className="create" onClick={handleCreate}>
-            Create New
-          </button>
-        </div>
-      </div>
+  <div className="btns">
+    <button className="joinBtn" onClick={handleJoin}>
+      Join Room
+    </button>
+
+    <button className="createBtn" onClick={handleCreate}>
+      Create New
+    </button>
+  </div>
+</div>
+
     </div>
   );
 }
