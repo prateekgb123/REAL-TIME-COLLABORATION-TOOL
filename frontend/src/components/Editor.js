@@ -5,41 +5,75 @@ import { socket } from "../socket";
 
 export default function Editor({ roomId, username }) {
   const [value, setValue] = useState("");
-  const [users, setUsers] = useState([]);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     socket.emit("join-document", { roomId, username });
 
-    socket.on("load-document", setValue);
-    socket.on("receive-changes", setValue);
-    socket.on("presence", setUsers);
-  }, []);
+    socket.once("load-document", (content) => {
+      setValue(content);
+      setLoaded(true);
+    });
+
+    socket.on("receive-changes", (content) => {
+      setValue(content);
+    });
+
+    return () => {
+      socket.off("receive-changes");
+    };
+  }, [roomId, username]);
 
   const handleChange = (content) => {
     setValue(content);
     socket.emit("send-changes", { roomId, content });
   };
 
+  // autosave
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (loaded) {
+        socket.emit("save-document", { roomId, content: value });
+      }
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, [value, loaded, roomId]);
+
+  if (!loaded) return <p style={{ padding: 20 }}>Loading document...</p>;
+
   return (
-    <div className="editorLayout">
+    <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
+      
       {/* HEADER */}
-      <div className="header">
+      <div
+        style={{
+          height: "60px",
+          background: "#111",
+          color: "white",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: "0 20px"
+        }}
+      >
         <div>
-          <h3>Room: {roomId}</h3>
+          <strong>Room:</strong> {roomId}
         </div>
 
-        <div className="users">
-          {users.map((u) => (
-            <span key={u.id} className="avatar">
-              {u.username[0]}
-            </span>
-          ))}
+        <div>
+          <strong>User:</strong> {username}
         </div>
       </div>
 
       {/* EDITOR */}
-      <div className="editorContainer">
-        <ReactQuill value={value} onChange={handleChange} theme="snow" />
+      <div style={{ flex: 1 }}>
+        <ReactQuill
+          value={value}
+          onChange={handleChange}
+          theme="snow"
+          style={{ height: "100%" }}
+        />
       </div>
     </div>
   );

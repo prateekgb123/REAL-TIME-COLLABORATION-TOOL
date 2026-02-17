@@ -78,3 +78,8 @@ body {
   align-items: center;
   margin-left: 6px;
 }
+.error {
+  color: red;
+  font-size: 14px;
+  margin-top: 8px;
+}
