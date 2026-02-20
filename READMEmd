@@ -1,0 +1,114 @@
+CollabSpace-Real-Time Collaboration Tool--
+
+CollabSpace is a real-time document collaboration tool built using the MERN stack and Socket.io.
+It allows multiple users to join the same room, edit a document together in real time, and see who else is currently present — similar to how collaborative editors work.
+
+1. What This Project Does:-
+
+-Users can create or join a room using a Room ID
+-Multiple users can edit the same document at the same time
+-Changes appear instantly for everyone in the room
+-Documents are automatically saved to MongoDB
+-Active users in the room are displayed in the header
+-This project focuses on real-time communication, multi-user state management, and clean UI design.
+
+2. Tech Stack:-
+
+Frontend-
+
+1.React.js
+2.React Quill (rich text editor)
+3.Socket.io client
+4.Custom CSS
+
+Backend-
+
+1.Node.js
+2.Express.js
+3.Socket.io
+4.MongoDB
+5.Mongoose
+
+3. How It Works:-
+
+-A user enters their name and a room ID.
+-The frontend connects to the backend using Socket.io.
+-The backend adds the user to that room.
+-The document content is loaded from MongoDB (or created if it doesn’t exist).
+-When a user types, changes are emitted to the server.
+-The server broadcasts those changes to other users in the same room.
+-The document is auto-saved every few seconds.
+-When someone leaves, the user list updates automatically.
+
+4. Project Structure:-
+
+CollabSpace
+│
+├── backend
+│   ├── models
+│   │   └── Document.js
+│   ├── socket
+│   │   └── documentSocket.js
+│   ├── server.js
+│   └── package.json
+│
+├── frontend
+│   ├── src
+│   │   ├── components
+│   │   │   ├── Editor.js
+│   │   │   ├── Join.js
+│   │   │   └── ...
+│   │   ├── socket.js
+│   │   ├── App.js
+│   │   └── App.css
+│   └── package.json
+│
+└── README.md
+
+5. Running the Project Locally:-
+
+Step 1 - Clone the repository
+git clone <your-repo-link>
+cd collabspace
+
+Step 2 - Setup backend
+cd backend
+npm install
+Create a .env file:
+PORT=5000
+MONGO_URI=your_mongodb_connection_string
+Start backend:
+npm start
+
+Step 3 - Setup frontend
+cd frontend
+npm install
+npm start
+Open:
+http://localhost:3000
+
+6. Features Implemented:-
+
+-Real-time document syncing
+-Room-based collaboration
+-Auto-save functionality
+-Live user presence list
+-Branded header with logo
+-Clean document-style layout
+
+7. Possible Improvements:-
+
+-Typing indicators
+-Dark mode
+-Version history
+-Role-based access
+-Deployment to production
+
+8. Why I Built This
+
+-This project was built to understand:
+1.Real-time communication using WebSockets
+2.Managing shared state across multiple users
+3.Handling presence tracking
+4.Integrating MongoDB persistence
+5.Designing a clean, usable interface
