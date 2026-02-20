@@ -8,12 +8,21 @@ module.exports = (io) => {
     socket.on("join-document", async ({ roomId, username }) => {
       socket.join(roomId);
 
-      // Presence logic
-      if (!rooms[roomId]) rooms[roomId] = [];
-      rooms[roomId].push({ id: socket.id, username });
-      io.to(roomId).emit("presence", rooms[roomId]);
+      // Initialize room if not exists
+      if (!rooms[roomId]) {
+        rooms[roomId] = [];
+      }
 
-      // 🔥 FETCH DOCUMENT FROM DB
+      // Add user
+      rooms[roomId].push({
+        id: socket.id,
+        username
+      });
+
+      // Emit updated users list
+      io.to(roomId).emit("room-users", rooms[roomId]);
+
+      // Load document
       let doc = await Document.findOne({ roomId });
 
       if (!doc) {
@@ -23,7 +32,6 @@ module.exports = (io) => {
         });
       }
 
-      // Send saved content
       socket.emit("load-document", doc.content);
     });
 
@@ -40,12 +48,14 @@ module.exports = (io) => {
     });
 
     socket.on("disconnect", () => {
-      for (const room in rooms) {
-        rooms[room] = rooms[room].filter(
-          (u) => u.id !== socket.id
+      for (const roomId in rooms) {
+        rooms[roomId] = rooms[roomId].filter(
+          user => user.id !== socket.id
         );
-        io.to(room).emit("presence", rooms[room]);
+
+        io.to(roomId).emit("room-users", rooms[roomId]);
       }
     });
+
   });
 };
