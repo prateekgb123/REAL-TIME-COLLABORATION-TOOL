@@ -9,7 +9,7 @@ export default function Editor({ roomId, username }) {
   const [users, setUsers] = useState([]);
   const [showUsers, setShowUsers] = useState(false);
 
-  const hasJoined = useRef(false); // ✅ Prevent double join
+  const hasJoined = useRef(false); 
 
   // =============================
   // JOIN ROOM & SOCKET LISTENERS
@@ -17,7 +17,6 @@ export default function Editor({ roomId, username }) {
   useEffect(() => {
     if (!roomId || !username) return;
 
-    // Prevent React StrictMode double join
     if (!hasJoined.current) {
       socket.emit("join-document", { roomId, username });
       hasJoined.current = true;
@@ -45,7 +44,7 @@ export default function Editor({ roomId, username }) {
       socket.off("room-users", handleRoomUsers);
       socket.off("load-document", handleLoad);
     };
-  }, [roomId]); // 🔥 username removed to avoid re-emit
+  }, [roomId]); 
 
   // =============================
   // HANDLE TEXT CHANGE

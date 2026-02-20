@@ -2,7 +2,7 @@ import { useState } from "react";
 import { v4 as uuid } from "uuid";
 import Editor from "./Editor";
 import "../App.css";
-
+import main from "../main.png";
 export default function Join() {
   const [username, setUsername] = useState("");
   const [room, setRoom] = useState("");
@@ -24,7 +24,9 @@ export default function Join() {
   return (
     <div className="joinPage">
     <div className="joinCard">
-  <h1>🚀 Collaboration Space</h1>
+      
+     <img src={main} alt="Main" className="main" /> 
+    <h1>Collaboration Space</h1>
 
   <div className="inputGroup">
     <input

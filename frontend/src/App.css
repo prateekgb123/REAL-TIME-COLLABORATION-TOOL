@@ -290,3 +290,8 @@ body {
   width: 28px;
   object-fit: contain;
 }
+.main {
+  height: 100px;
+  width: 100px;
+  object-fit: contain;
+}

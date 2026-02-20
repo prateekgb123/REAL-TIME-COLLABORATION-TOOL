@@ -8,21 +8,19 @@ module.exports = (io) => {
     socket.on("join-document", async ({ roomId, username }) => {
       socket.join(roomId);
 
-      // Initialize room if not exists
+
       if (!rooms[roomId]) {
         rooms[roomId] = [];
       }
 
-      // Add user
+
       rooms[roomId].push({
         id: socket.id,
         username
       });
 
-      // Emit updated users list
       io.to(roomId).emit("room-users", rooms[roomId]);
 
-      // Load document
       let doc = await Document.findOne({ roomId });
 
       if (!doc) {
